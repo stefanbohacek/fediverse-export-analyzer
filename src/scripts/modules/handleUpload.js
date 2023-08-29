@@ -6,6 +6,7 @@ const cookieManager = new Cookie();
 const fileInput = document.getElementById("file-input");
 const introElement = document.getElementById("intro");
 const loadingAnimation = document.getElementById("loading-animation");
+const loadingText = document.getElementById("loading-text");
 const resultsElement = document.getElementById("results");
 const userInfo = document.getElementById("user-info");
 const userAvatar = document.getElementById("user-avatar");
@@ -17,6 +18,8 @@ const handleUpload = () => {
   if (fileInput) {
     fileInput.addEventListener("change", async (ev) => {
       loadingAnimation.classList.remove('d-none');
+      loadingText.classList.remove('d-none');
+      fileInput.disabled = true;
       const formData = new FormData();
       formData.set("archive", fileInput.files[0]);
 
@@ -213,6 +216,8 @@ const handleUpload = () => {
         });
       } else {
         loadingAnimation.classList.add('d-none');
+        loadingText.classList.add('d-none');
+        fileInput.disabled = false;
       }
     });
   }
