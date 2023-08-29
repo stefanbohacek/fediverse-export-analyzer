@@ -5,6 +5,7 @@ import Cookie from "/js/cookies/main.min.js";
 const cookieManager = new Cookie();
 const fileInput = document.getElementById("file-input");
 const introElement = document.getElementById("intro");
+const loadingAnimation = document.getElementById("loading-animation");
 const resultsElement = document.getElementById("results");
 const userInfo = document.getElementById("user-info");
 const userAvatar = document.getElementById("user-avatar");
@@ -15,6 +16,7 @@ const chartElement = document.getElementById("chart");
 const handleUpload = () => {
   if (fileInput) {
     fileInput.addEventListener("change", async (ev) => {
+      loadingAnimation.classList.remove('d-none');
       const formData = new FormData();
       formData.set("archive", fileInput.files[0]);
 
@@ -209,6 +211,8 @@ const handleUpload = () => {
             // }
           },
         });
+      } else {
+        loadingAnimation.classList.add('d-none');
       }
     });
   }
