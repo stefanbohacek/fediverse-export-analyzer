@@ -1,0 +1,56 @@
+<div>
+  <div id="intro" class="container p-5 mb-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 text-center">
+        <img
+        loading="lazy"
+          width="300"
+          height="389"
+          src="/images/poser-illustrations/Files/PNG with transparency/Illustration 6.png"
+          class=""
+          alt="..."
+        />
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <h1 class="text-start">Explore your fediverse data</h1>
+        <p class="lead mb-4">
+          Currently supports Mastodon and Firefish data exports. More to come!
+        </p>
+        <p class="mt-5 mt-md-2 text-start">
+          <ol>
+            <li>
+              Read the <a href="/privacy-policy">privacy policy</a>.
+            </li>
+            <li>
+              Download your archive. (<a href="/how-to-export">See how.</a>)
+            </li>
+            <li>
+              <label class="form-label" for="avatar">Upload it below.</label>
+              <input class="d-block mt-3 form-control" type="file" id="file-input" name="export" accept="application/tar, application/tar+gzip" />
+            </li>
+          </ol>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div id="results" class="container p-5 mb-5 d-none">
+    <div class="row">
+      <div id="user-info" class="col-sm-12 col-lg-6 text-center bg-light rounded">
+        <div class="d-flex sticky-top pt-4 pb-4">
+          <div id="user-avatar" class="flex-shrink-0">
+          </div>
+          <div id="user-description" class="flex-grow-1 ms-3 text-start">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-6">
+        <div id="user-data-breakdown" class="p-4">
+        </div>
+        <canvas id="chart"></canvas>
+      </div>
+      <div class="col-sm-12 text-center">
+        <a class="btn btn-primary mt-5" href="/">Start over</a>
+      </div>
+    </div>
+  </div>  
+</div>

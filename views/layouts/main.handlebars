@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Fediverse Export Analyzer</title>
+    <meta property="og:title" content="Fediverse Export Analyzer" />
+    <meta name="twitter:title" content="Fediverse Export Analyzer" />
+    <meta name="description" content="Create and share polls with the fediverse." />
+    <meta property="og:description" content="Create and share polls with the fediverse." />
+    <meta name="twitter:description" content="Create and share polls with the fediverse." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://stefanbohacek.com" />
+    <meta property="og:image" content="/images/thumbnail.png" /> 
+    <meta property="og:image:alt" content="TODO" /> 
+    <meta property="twitter:image:src" content="/images/thumbnail.png" /> 
+    <meta property="twitter:image:alt" content="TODO" /> 
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@stefanbohacek" />
+    <meta name="twitter:domain" content="https://stefanbohacek.com/" />
+    <!-- TODO: Favicons -->
+    <!-- <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+        <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+        <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
+        <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+        <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
+        <meta name="theme-color" content="#712cf9"> -->
+    <link href="/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/styles.min.css" rel="stylesheet">
+</head>
+<body data-bs-theme="dark" class="d-flex flex-column h-100 pt-5">
+    <script>
+        const toggleDarkMode = (enabled) => {
+            if (enabled){
+                document.body.setAttribute('data-bs-theme', 'dark');
+            } else {
+                document.body.setAttribute('data-bs-theme', 'light');
+            }
+        }
+
+        const enableDarkMode = () => {
+            if (window.matchMedia) {
+                toggleDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+            }
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                toggleDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+            });
+        }
+        enableDarkMode();
+    </script>
+    {{> header }}   
+    <main class="flex-shrink-0 mt-3">
+        <div class="container mt-5">
+          {{{body}}}
+        </div>
+    </main>
+    {{> footer }}
+    <script src="/libs/bootstrap/js/bootstrap.min.js" ></script>
+    <script src="/libs/moment.js/moment.min.js" ></script>
+    <script src="/libs/chart.js/3.9.1/chart.min.js" ></script>
+    <script src="/libs/chartjs-adapter-moment/chartjs-adapter-moment-adapter.min.js" ></script>
+    <script type="module" src="/js/main.min.js" ></script>
+    {{#if page_is_editor}}
+    <script type="module" src="/js/app.min.js" ></script>
+    {{/if}}    
+    {{!-- <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="https://matomo.stefanbohacek.dev/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '13']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+    </script> --}}
+</body>
+</html>
