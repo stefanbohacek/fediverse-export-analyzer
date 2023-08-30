@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/", upload, async (req, res) => {
   const {file} = req;
-  // console.log({file});
+  console.log({file});
   let data = {};
 
   if (file) {
