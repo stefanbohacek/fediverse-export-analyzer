@@ -7,15 +7,15 @@
     <title>Fediverse Export Analyzer</title>
     <meta property="og:title" content="Fediverse Export Analyzer" />
     <meta name="twitter:title" content="Fediverse Export Analyzer" />
-    <meta name="description" content="Create and share polls with the fediverse." />
-    <meta property="og:description" content="Create and share polls with the fediverse." />
-    <meta name="twitter:description" content="Create and share polls with the fediverse." />
+    <meta name="description" content="Explore your exported fediverse data. A tool by @stefan@stefanbohacek.online." />
+    <meta property="og:description" content="Explore your exported fediverse data. A tool by @stefan@stefanbohacek.online." />
+    <meta name="twitter:description" content="Explore your exported fediverse data. A tool by @stefan@stefanbohacek.online." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://stefanbohacek.com" />
-    <meta property="og:image" content="/images/thumbnail.png" /> 
-    <meta property="og:image:alt" content="TODO" /> 
-    <meta property="twitter:image:src" content="/images/thumbnail.png" /> 
-    <meta property="twitter:image:alt" content="TODO" /> 
+    <meta property="og:image" content="/images/thumbnails/fediverse-export-analyzer-1200x800-tint.png" /> 
+    <meta property="og:image:alt" content="A screenshot of the Fediverse Export Analyzer interface, showing a visualization of Mastodon user account with profile image and description in the left column, and various details, including account creation date, embedded first post, and posting frequency, and a scatter plot of all posts." /> 
+    <meta property="twitter:image:src" content="/images/thumbnails/fediverse-export-analyzer-1200x800-tint.png" /> 
+    <meta property="twitter:image:alt" content="A screenshot of the Fediverse Export Analyzer interface, showing a visualization of Mastodon user account with profile image and description in the left column, and various details, including account creation date, embedded first post, and posting frequency, and a scatter plot of all posts." /> 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@stefanbohacek" />
     <meta name="twitter:domain" content="https://stefanbohacek.com/" />
@@ -63,21 +63,5 @@
     <script src="/libs/chart.js/3.9.1/chart.min.js" ></script>
     <script src="/libs/chartjs-adapter-moment/chartjs-adapter-moment-adapter.min.js" ></script>
     <script type="module" src="/js/main.min.js" ></script>
-    {{#if page_is_editor}}
-    <script type="module" src="/js/app.min.js" ></script>
-    {{/if}}    
-    {{!-- <script>
-    var _paq = window._paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-        var u="https://matomo.stefanbohacek.dev/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '13']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-    })();
-    </script> --}}
 </body>
 </html>
