@@ -43,7 +43,12 @@ router.post("/", upload, async (req, res) => {
         if (file.originalname.endsWith('.json')){
           const jsonData = JSON.parse(req.file.buffer.toString());
           data.outbox = jsonData;
-          data.format = 'firefish';
+
+          if (file.originalname.endsWith('outbox.json')){
+            data.format = 'pixelfed';
+          } else {
+            data.format = 'firefish';
+          }
         }
         break;
       case 'application/octet-stream':
