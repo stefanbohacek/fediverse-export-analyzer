@@ -21,6 +21,7 @@ router.post("/", upload, async (req, res) => {
   if (file) {
     switch (file.mimetype) {
       case 'application/x-gzip':
+      case 'application/x-zip-compressed':
         const files = await decompress(file.buffer)
         // let JSONfiles = files.filter(file => file.path.endsWith('.json'));
 
