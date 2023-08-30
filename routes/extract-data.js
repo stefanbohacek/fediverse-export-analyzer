@@ -15,13 +15,14 @@ const router = express.Router();
 
 router.post("/", upload, async (req, res) => {
   const {file} = req;
-  console.log({file});
+  // console.log({file});
   let data = {};
 
   if (file) {
     switch (file.mimetype) {
       case 'application/x-gzip':
       case 'application/x-zip-compressed':
+      case 'application/zip':
         const files = await decompress(file.buffer)
         // let JSONfiles = files.filter(file => file.path.endsWith('.json'));
 
