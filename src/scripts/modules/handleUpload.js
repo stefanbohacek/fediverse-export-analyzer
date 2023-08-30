@@ -66,9 +66,16 @@ const handleUpload = () => {
           }
   
           userDescription.innerHTML = `<div>${userDescriptionHTML}</div>`;
-          userAvatar.innerHTML = `
-            <img class="img-thumbnail" width="64" height="64" src="data:image/jpg;base64,${userData.avatar}">
-          `;
+
+          if (userData.avatar_url){
+            userAvatar.innerHTML = `
+              <img class="img-thumbnail" width="64" height="64" src="${userData.avatar_url}">
+            `;
+          } else if (userData.avatar){
+            userAvatar.innerHTML = `
+              <img class="img-thumbnail" width="64" height="64" src="data:image/jpg;base64,${userData.avatar}">
+            `;
+          }
         } else {
           userInfo.remove();
           userDescription.remove();
@@ -118,7 +125,7 @@ const handleUpload = () => {
           if (firstPost) {
             const postURL = firstPost?.object?.id || firstPost?.id;
             const url = new URL(postURL);
-            instanceURL = `${url.protocol}//${url.hostname}`
+            instanceURL = `${url.protocol}//${url.hostname}`;
 
 
             userDataBreakdownHTML += `
@@ -160,15 +167,15 @@ const handleUpload = () => {
         // };
 
         const data = {
-          labels: posts.map((post) => moment(post.published || post.createdAt)),
+          labels: posts.map((post) => moment(post.published || post.createdAt || post.created)),
           datasets: [
             {
               label: "Your posts in time",
               data: posts.map((post, index) => {
                 return {
-                  x: moment(post.published || post.createdAt),
+                  x: moment(post.published || post.createdAt || post.created),
                   // y: (new Date(post.published || post.createdAt)).getHour() + 1,
-                  y: (new Date(post.published || post.createdAt)).getHours(),
+                  y: (new Date(post.published || post.createdAt || post.created)).getHours(),
                 };
               }),
               backgroundColor: ['#ff6384']
@@ -205,13 +212,18 @@ const handleUpload = () => {
                   minorTickInterval: null,
                 },
             },
-
-            // scales: {
-            //   x: {
-            //     type: 'linear',
-            //     position: 'bottom'
-            //   }
-            // }
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  // label: (ctx) => ctx.label                  
+                  label: (ctx) => {
+                    // console.log(ctx);
+                    // console.log(posts[ctx.dataIndex].object.content);
+                    return ctx.label
+                   }
+                }
+             }
+            }
           },
         });
       } else {

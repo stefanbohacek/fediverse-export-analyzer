@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/", upload, async (req, res) => {
   const {file} = req;
-  console.log({file});
+  // console.log({file});
   let data = {};
 
   if (file) {
@@ -29,8 +29,6 @@ router.post("/", upload, async (req, res) => {
                   file.path.endsWith('outbox.json') ||
                   file.path.includes('avatar'));
     
-        console.log(JSONfiles);
-
         JSONfiles.forEach(f => {
           if (f.path.endsWith('.json')){
             data[f.path.replace('.json', '').replace('.jpg', '')] = JSON.parse(f.data.toString('utf8'));
@@ -46,16 +44,30 @@ router.post("/", upload, async (req, res) => {
           const jsonData = JSON.parse(req.file.buffer.toString());
           data.outbox = jsonData;
           data.format = 'firefish';
+        }
+        break;
+      case 'application/octet-stream':
+        if (file.originalname.endsWith('.backup')){
+          let userData = req.file.buffer.toString().split('\n').filter(d => d.trim().length > 0);
+          userData = userData.map(data => JSON.parse(data));
+          const username = userData[0].user.nickname;
 
-          console.log(jsonData);
+          data.actor = {
+            name: userData[0].user.username,
+            summary: userData[0].contact[0].about,
+            published: userData[0].user.register_date
+          };
+
+          data.avatar_url = userData[0].contact[0].avatar;
+          data.outbox = userData[1].item.filter(data => data['author-link'].endsWith(`profile/${username}`));
+          data.format = 'friendica';
         }
         break;
       default:
         break;
     }
 
-    console.log({data});
-
+    // console.log({data});
     res.json({data});
   } else {
     res.json({error: 'no_data'});
