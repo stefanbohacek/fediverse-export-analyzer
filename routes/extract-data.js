@@ -42,6 +42,7 @@ router.post("/", upload, async (req, res) => {
         data.format = 'mastodon';
         break;
       case 'text/plain':
+      case 'application/json':
         if (file.originalname.endsWith('.json')){
           const jsonData = JSON.parse(req.file.buffer.toString());
           data.outbox = jsonData;
