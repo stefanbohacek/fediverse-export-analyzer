@@ -4,6 +4,6 @@
 
 ```sh
 npm install
-npm start dev
+npm run dev
 npm run gulp
 ```

@@ -82,9 +82,9 @@ const handleUpload = () => {
           userDescription.remove();
         }
 
-        let posts = [],
-          firstPost,
-          postCount = 0;
+        let posts = [];
+        let firstPost;
+        let postCount = 0;
 
         if (userData?.outbox?.orderedItems) {
           posts = userData.outbox.orderedItems;
@@ -95,32 +95,76 @@ const handleUpload = () => {
         postCount = posts.length;
         let milestones = [];
 
+        let counter = {
+          posts: 0,
+          replies: 0,
+          reblogs: 0,
+          total: 0,
+        };
+
         if (postCount) {
           // posts = sortArrayOfObjects(posts, key, desc)
           const maxRoot = Math.ceil(Math.pow(posts.length, 1 / 10));
+          let index = 0;
           firstPost = posts[0];
 
-          if (posts.length >= 10) {
-            for (let i = 1; i <= maxRoot; i++) {
-              const post = posts[Math.pow(10, i)];
-              const url = post.id.replace("/activity", "");
+          posts.forEach((post) => {
+            let isSemiPublic = false;
+            const recipients = [...post.to, ...post.cc];
 
-              let milestone = {};
-              let isBoost = false;
-
-              if (!post.object.id) {
-                isBoost = true;
+            recipients.forEach(recipient => {
+              if (recipient.endsWith("/followers")){
+                isSemiPublic = true;
               }
+            });
+            
+            if (isSemiPublic) {
+              index++;
+              if (posts.length >= 10 && index <= maxRoot) {
+                const post = posts[Math.pow(10, index)];
+                const url = post.id.replace("/activity", "");
+    
+                let milestone = {};
+                let isBoost = false;
+    
+                if (!post.object.id) {
+                  isBoost = true;
+                }
+    
+                milestone = {
+                  label: [`${Math.pow(10, index).toLocaleString()}th post`],
+                  url,
+                  isBoost,
+                };
+    
+                milestones.push(milestone);
+              }
+    
+    
 
-              milestone = {
-                label: [`${Math.pow(10, i).toLocaleString()}th post`],
-                url,
-                isBoost,
-              };
 
-              milestones.push(milestone);
+
+
+
+              counter.total++;
+              if (post.type === "Create") {
+                if (post.object.inReplyTo) {
+                  counter.replies++;
+                } else {
+                  counter.posts++;
+                }
+              } else {
+                counter.reblogs++;
+              }
+            } else {
+              // console.log(post.id.replace("users/", "@").replace("statuses/", "").replace("/activity", ""), recipients);
+              // console.log(recipients);
+              // if (recipients.length === 0){
+              //   console.log(post.id.replace("users/", "@").replace("statuses/", "").replace("/activity", ""));
+              // }
             }
-          }
+          });
+          // console.log({ counter });
         }
 
         const options = {
@@ -142,9 +186,24 @@ const handleUpload = () => {
             ).toLocaleDateString(
               undefined,
               options
-            )}</strong>, which is <strong>${timeAgo.toLocaleString()} day(s) ago</strong>. Since then, you posted <strong>${postCount.toLocaleString()} times</strong>, or about ${Math.round(
-            postCount / timeAgo
+            )}</strong>, which is <strong>${timeAgo.toLocaleString()} day(s) ago</strong>. Since then, you posted <strong>${counter.total.toLocaleString()} times</strong>, or about ${Math.round(
+            counter.total / timeAgo
           ).toLocaleString()} time(s) a day on average.
+          </p>
+          `;
+        }
+
+        /*
+        counter = {
+          posts: 0,
+          replies: 0,
+          reblogs: 0,
+*/
+
+        if (counter.reblogs > 0 || counter.replies > 0) {
+          userDataBreakdownHTML += `
+          <p>
+            You have reblogged <strong>${counter.reblogs.toLocaleString()} post(s)</strong>, replied <strong>${counter.replies.toLocaleString()} time(s)</strong>, and posted <strong>${counter.posts.toLocaleString()} new post(s)</strong>.
           </p>
           `;
         }
