@@ -112,40 +112,33 @@ const handleUpload = () => {
             let isSemiPublic = false;
             const recipients = [...post.to, ...post.cc];
 
-            recipients.forEach(recipient => {
-              if (recipient.endsWith("/followers")){
+            recipients.forEach((recipient) => {
+              if (recipient.endsWith("/followers")) {
                 isSemiPublic = true;
               }
             });
-            
+
             if (isSemiPublic) {
               index++;
               if (posts.length >= 10 && index <= maxRoot) {
                 const post = posts[Math.pow(10, index)];
                 const url = post.id.replace("/activity", "");
-    
+
                 let milestone = {};
                 let isBoost = false;
-    
+
                 if (!post.object.id) {
                   isBoost = true;
                 }
-    
+
                 milestone = {
                   label: [`${Math.pow(10, index).toLocaleString()}th post`],
                   url,
                   isBoost,
                 };
-    
+
                 milestones.push(milestone);
               }
-    
-    
-
-
-
-
-
               counter.total++;
               if (post.type === "Create") {
                 if (post.object.inReplyTo) {
@@ -154,7 +147,22 @@ const handleUpload = () => {
                   counter.posts++;
                 }
               } else {
-                counter.reblogs++;
+                try {
+                  if (
+                    post.id &&
+                    post.object &&
+                    post.id.split("/users/")[0] ===
+                      post.object.split("/users/")[0]
+                  ) {
+                    console.log(post);
+                    counter.posts++;
+                    counter.total++;
+                  } else {
+                    counter.reblogs++;
+                  }
+                } catch (err) {
+                  /*noop*/
+                }
               }
             } else {
               // console.log(post.id.replace("users/", "@").replace("statuses/", "").replace("/activity", ""), recipients);
@@ -192,13 +200,6 @@ const handleUpload = () => {
           </p>
           `;
         }
-
-        /*
-        counter = {
-          posts: 0,
-          replies: 0,
-          reblogs: 0,
-*/
 
         if (counter.reblogs > 0 || counter.replies > 0) {
           userDataBreakdownHTML += `
